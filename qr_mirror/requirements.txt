@@ -1,0 +1,6 @@
+aiohttp
+opencv-python
+numpy
+pyautogui
+pyscreenshot
+Pillow

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QR Mirror</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      color: #000;
+      text-align: center;
+    }
+    button {
+      padding: 15px 25px;
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 5px;
+      background: #28a745;
+      color: #fff;
+      cursor: pointer;
+    }
+    .qr-container {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      border: 4px solid #007bff;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    img { max-width: 200px; height: auto; }
+    .timer {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: red;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <button id="scanBtn">Scan QR Code</button>
+
+  <div class="qr-container">
+    <img id="qr" src="/qr.png" alt="QR Code">
+  </div>
+
+  <div id="timer" class="timer"></div>
+
+  <script>
+    const SCAN_DURATION_MS = {{SCAN_DURATION_MS}};
+    const TIMER_DURATION_S = {{TIMER_DURATION_S}};
+
+    const scanBtn = document.getElementById("scanBtn");
+    const timerEl = document.getElementById("timer");
+
+    scanBtn.addEventListener("click", () => {
+      scanBtn.disabled = true;
+      fetch("/start", { method: "POST" });
+      setTimeout(() => { scanBtn.disabled = false; }, SCAN_DURATION_MS);
+    });
+
+    const wsProto = location.protocol === "https:" ? "wss://" : "ws://";
+    const ws = new WebSocket(wsProto + location.host + "/ws");
+
+    ws.onmessage = function (e) {
+      if (e.data.startsWith("update:")) {
+        document.getElementById("qr").src = "/qr.png?t=" + Date.now();
+      } else if (e.data === "timer") {
+        startTimer(TIMER_DURATION_S);
+      }
+    };
+
+    function startTimer(totalSec) {
+      timerEl.style.display = "block";
+      let remaining = totalSec;
+      render(remaining);
+      const iv = setInterval(() => {
+        remaining -= 1;
+        if (remaining <= 0) {
+          clearInterval(iv);
+          timerEl.style.display = "none";
+          return;
+        }
+        render(remaining);
+      }, 1000);
+    }
+
+    function render(seconds) {
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      const s = seconds % 60;
+      timerEl.textContent =
+        h + ":" + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+    }
+  </script>
+</body>
+</html>
