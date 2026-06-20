@@ -1,5 +1,7 @@
 # QR Mirror
 
+> **Archived.** This was a quick personal project, no longer maintained.
+
 > Built out of spite for a subscription system that assumed one person could only ever own one phone.
 
 Captures a QR code visible on screen and serves it as a live image over a local web server. A browser on any device on the same network can display the mirrored QR code in real time.
