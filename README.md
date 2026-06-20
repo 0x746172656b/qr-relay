@@ -4,9 +4,8 @@
 
 Captures a QR code visible on screen and serves it as a live image over a local web server. A browser on any device on the same network can display the mirrored QR code in real time.
 
-Originally run on an Android VM — the QR code generated on the "real" device was mirrored to the VM, which could then present it anywhere else. If a confirmation dialog appeared between scans, the auto-clicker dismissed it automatically so the next scan could proceed without manual intervention.
+Originally run on an Android VM — the QR code generated on the "real" device was mirrored to the VM and served over the web, so anyone with access to the server could display it on their own device. If a confirmation dialog appeared between scans, the auto-clicker dismissed it automatically so the next scan could proceed without manual intervention.
 
-You know how it is.
 
 ## Requirements
 
