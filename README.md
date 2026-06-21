@@ -18,6 +18,10 @@ The setup that motivated this: run the gym app on an Android VM on a desktop, ca
 
 ---
 
+## Security
+
+If you expose this beyond your local network, put it behind an authentication layer (Authelia, Authentik, or HTTP basic auth at minimum) — the endpoint serves a live QR code with no access control.
+
 ## Requirements
 
 - Python 3.9+
