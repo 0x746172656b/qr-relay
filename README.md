@@ -4,19 +4,17 @@
 
 ---
 
-My gym uses a QR code to let you through the turnstile. You open the app, tap a button, a QR code appears, you scan it, you're in. Simple enough.
+My gym uses a QR code for turnstile access. You open the app, generate a QR code, scan it, done.
 
-Except the app decides that one subscription equals one phone. Not one person. One phone. My QR code lives on my personal phone, and only my personal phone. Want to use your work phone today? Too bad. Left your phone at home? Hope you enjoy standing at the front desk explaining yourself to a 19-year-old who didn't write the software.
+The problem: the app ties your QR code to a single registered device. No multi-device support, no secondary device option, no way to authorize a second phone. If you want to use a different device, you can't. The subscription is paid per person, but access is enforced per device. That is a bad policy and the gym charged me money for it.
 
-There's no family sharing, no secondary device, no "trust this phone too" option. Just a hard assumption baked into the product that a paying customer is a single biological entity permanently fused to a single Android or iOS device.
-
-I found that insulting enough to spend a weekend on this.
+This project exists because that constraint is artificial and I had a free weekend.
 
 ---
 
-**What this does:** captures the QR code visible on one screen and serves it as a live image over a local web server. Any browser on the same network can display the mirrored QR code in real time, on any device, no app required.
+**What this does:** captures the QR code displayed on one screen and serves it as a live image over a local web server. Any browser on the same network can load the mirrored QR code in real time, on any device, without the app.
 
-The original setup ran the app on an Android VM on my desktop. The VM generated the QR code, this tool captured it and pushed it to a web page, and I could open that page on whatever device I had on me that day. If the app showed a confirmation dialog between scans (its little way of making things annoying), the auto-clicker dismissed it automatically so the next scan could proceed without me babysitting it.
+The setup that motivated this: run the gym app on an Android VM on a desktop, capture the QR code it generates, push it to a web page accessible from any device on the network. If the app showed a confirmation dialog between scans, the auto-clicker dismissed it so the next scan could proceed without manual intervention.
 
 ---
 
